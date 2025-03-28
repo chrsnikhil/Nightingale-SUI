@@ -1,6 +1,7 @@
-import Image from "next/image";
-import GridDistortion from "@/components/GridDistortion";
-import TextPressure from "@/components/TextPressure";
+import GridDistortion from '@/components/GridDistortion';
+import TextPressure from '@/components/TextPressure';
+
+import ButtonContainer from '@/ui/button-container';
 
 export default function Home() {
   return (
@@ -13,19 +14,19 @@ export default function Home() {
         relaxation={0.9}
         className="custom-class"
       />
-      <TextPressure>
-      text="Hello!"
-    flex={true}
-    alpha={false}
-    stroke={false}
-    width={true}
-    weight={true}
-    italic={true}
-    textColor="#ffffff"
-    strokeColor="#ff0000"
-    minFontSize={36}
-      </TextPressure>
+      <TextPressure
+        text="Nightingale"
+        flex={true}
+        alpha={false}
+        stroke={false}
+        width={true}
+        weight={true}
+        italic={true}
+        textColor="#ffffff"
+        strokeColor="#ff0000"
+        minFontSize={36}
+      />
+      <ButtonContainer />
     </div>
-    
   );
 }
