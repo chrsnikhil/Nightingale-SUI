@@ -9,6 +9,9 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@mysten/dapp-kit": "^0.15.2",
+    "@mysten/sui.js": "^0.54.1",
+    "@radix-ui/react-dialog": "^1.1.6",
     "@radix-ui/react-slot": "^1.1.2",
     "@react-three/fiber": "^9.1.0",
     "@react-three/postprocessing": "^3.0.4",
@@ -20,6 +23,7 @@
     "motion": "^12.6.3",
     "next": "15.2.4",
     "postprocessing": "^6.37.1",
+    "qrcode.react": "^4.2.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-element-to-jsx-string": "^17.0.0",

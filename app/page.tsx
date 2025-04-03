@@ -13,18 +13,18 @@ export default function Home() {
 
   return (
     <div className="relative w-full h-[600px] overflow-hidden">
-      <div className="absolute inset-0">
+      <div className="absolute inset-0 pointer-events-auto">
         <GridDistortion
           imageSrc="/12.jpg"
-          grid={10}
-          mouse={0.1}
-          strength={0.15}
-          relaxation={0.9}
-          className="custom-class"
+          grid={15}
+          mouse={0.15}
+          strength={0.1}
+          relaxation={0.95}
+          className="w-full h-full"
         />
       </div>
-      <div className="absolute inset-0 flex flex-col items-center justify-center gap-8 z-10 p-8">
-        <div className="w-1/2 flex justify-center items-center">
+      <div className="absolute inset-0 flex flex-col items-center justify-center gap-8 z-10 p-8 pointer-events-none">
+        <div className="w-1/2 flex justify-center items-center pointer-events-auto">
           <TextPressure
             text="Nightingale"
             flex={true}
@@ -38,36 +38,23 @@ export default function Home() {
             minFontSize={16}
           />
         </div>
-        <div className="flex gap-4">
-          <motion.div
+        <div className="flex gap-4 pointer-events-auto">
+          <motion.button
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
-            transition={{ type: "spring", stiffness: 400, damping: 17 }}
+            className="px-6 py-2 bg-white text-black rounded-lg font-medium"
           >
-            <Button 
-              variant="default" 
-              size="sm"
-              onClick={handlePlayClick}
-              className="bg-white/10 text-white hover:bg-white/20 border-white/20 px-4 py-2 text-sm font-light tracking-wide"
+            Play
+          </motion.button>
+          <Link href="/store">
+            <motion.button
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              className="px-6 py-2 bg-white text-black rounded-lg font-medium"
             >
-              Play
-            </Button>
-          </motion.div>
-          <motion.div
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            transition={{ type: "spring", stiffness: 400, damping: 17 }}
-          >
-            <Link href="/store">
-              <Button 
-                variant="default" 
-                size="sm"
-                className="bg-white/10 text-white hover:bg-white/20 border-white/20 px-4 py-2 text-sm font-light tracking-wide"
-              >
-                Store
-              </Button>
-            </Link>
-          </motion.div>
+              Store
+            </motion.button>
+          </Link>
         </div>
       </div>
     </div>
