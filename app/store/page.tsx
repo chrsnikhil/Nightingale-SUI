@@ -409,7 +409,7 @@ function StoreContent() {
 
       {/* Mint Dialog */}
       <Dialog open={showMintDialog} onOpenChange={setShowMintDialog}>
-        <DialogContent className="bg-black text-white border-gray-800">
+        <DialogContent className="bg-black text-white border-gray-800 max-h-[90vh] overflow-y-auto">
           <DialogHeader>
             <DialogTitle className="text-2xl font-bold">Mint NFT</DialogTitle>
             <DialogDescription className="text-gray-400">
@@ -431,19 +431,19 @@ function StoreContent() {
             <div className="space-y-4">
               <div className="flex justify-between items-center">
                 <span className="text-gray-400">Name</span>
-                <span className="font-medium">{selectedNFT?.name}</span>
+                <span className="font-medium text-right max-w-[60%] break-words">{selectedNFT?.name}</span>
               </div>
-              <div className="flex justify-between items-center">
+              <div className="flex justify-between items-start">
                 <span className="text-gray-400">Description</span>
-                <span className="font-medium text-right max-w-[60%]">{selectedNFT?.description}</span>
+                <span className="font-medium text-right max-w-[60%] break-words">{selectedNFT?.description}</span>
               </div>
               <div className="flex justify-between items-center">
                 <span className="text-gray-400">Price</span>
                 <span className="font-medium text-blue-400">{selectedNFT?.price} SUI</span>
               </div>
-              <div className="flex justify-between items-center">
+              <div className="flex justify-between items-start">
                 <span className="text-gray-400">Wallet Address</span>
-                <span className="font-mono text-sm text-gray-300">{account?.address}</span>
+                <span className="font-mono text-sm text-gray-300 text-right max-w-[60%] break-all">{account?.address}</span>
               </div>
             </div>
 
@@ -461,30 +461,32 @@ function StoreContent() {
             )}
           </div>
 
-          {/* Action Buttons */}
-          <div className="mt-8 flex justify-end gap-4">
-            <Button
-              variant="outline"
-              onClick={() => setShowMintDialog(false)}
-              className="border-gray-800 text-white hover:bg-gray-800 px-6"
-              disabled={mintingStatus === 'minting'}
-            >
-              Cancel
-            </Button>
-            <Button
-              onClick={() => selectedNFT && handleMintNFT(selectedNFT)}
-              className="bg-white text-black hover:bg-gray-200 px-6"
-              disabled={mintingStatus === 'minting'}
-            >
-              {mintingStatus === 'minting' ? (
-                <div className="flex items-center gap-2">
-                  <div className="w-4 h-4 border-2 border-black border-t-transparent rounded-full animate-spin" />
-                  <span>Minting...</span>
-                </div>
-              ) : (
-                'Confirm Mint'
-              )}
-            </Button>
+          {/* Action Buttons - Fixed at bottom */}
+          <div className="sticky bottom-0 bg-black pt-4 mt-6 border-t border-gray-800">
+            <div className="flex justify-end gap-4">
+              <Button
+                variant="outline"
+                onClick={() => setShowMintDialog(false)}
+                className="border-gray-800 text-white hover:bg-gray-800 px-6"
+                disabled={mintingStatus === 'minting'}
+              >
+                Cancel
+              </Button>
+              <Button
+                onClick={() => selectedNFT && handleMintNFT(selectedNFT)}
+                className="bg-white text-black hover:bg-gray-200 px-6"
+                disabled={mintingStatus === 'minting'}
+              >
+                {mintingStatus === 'minting' ? (
+                  <div className="flex items-center gap-2">
+                    <div className="w-4 h-4 border-2 border-black border-t-transparent rounded-full animate-spin" />
+                    <span>Minting...</span>
+                  </div>
+                ) : (
+                  'Confirm Mint'
+                )}
+              </Button>
+            </div>
           </div>
         </DialogContent>
       </Dialog>

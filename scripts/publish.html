@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Publish Wager Contract</title>
+    <script type="module">
+        import { TransactionBlock } from '@mysten/sui.js/transactions';
+        import { SuiClient, getFullnodeUrl } from '@mysten/sui.js/client';
+        
+        async function publishContract() {
+            try {
+                // Check if wallet is connected
+                if (!window.suiWallet) {
+                    alert('Please install Sui Wallet');
+                    return;
+                }
+
+                // Initialize SUI client
+                const client = new SuiClient({ url: getFullnodeUrl('testnet') });
+
+                // Create transaction block
+                const tx = new TransactionBlock();
+                
+                // Get the compiled module bytes from your server
+                const moduleResponse = await fetch('/move/wager/build/wager/bytecode_modules/wager.mv');
+                const moduleBytes = new Uint8Array(await moduleResponse.arrayBuffer());
+                
+                // Publish the package
+                const [upgradeCap] = tx.publish({
+                    modules: [Array.from(moduleBytes)],
+                    dependencies: [],
+                });
+
+                // Keep the upgrade cap
+                tx.transferObjects([upgradeCap], tx.pure('0x031bbebe4849662736649e76e852bcc502d37502f82f91d55c6695b22c9cd3c0'));
+
+                // Sign and execute the transaction using the wallet
+                const result = await window.suiWallet.signAndExecuteTransactionBlock({
+                    transactionBlock: tx,
+                });
+
+                document.getElementById('result').textContent = 'Success! Transaction digest: ' + result.digest;
+            } catch (error) {
+                document.getElementById('result').textContent = 'Error: ' + error.message;
+            }
+        }
+
+        // Add click handler
+        document.getElementById('publishButton').onclick = publishContract;
+    </script>
+</head>
+<body>
+    <h1>Publish Wager Contract</h1>
+    <button id="publishButton">Publish Contract</button>
+    <div id="result"></div>
+</body>
+</html> 
