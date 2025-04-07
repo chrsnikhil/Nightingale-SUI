@@ -14,6 +14,30 @@ import { toast } from "react-hot-toast";
 
 type WagerStatus = 'idle' | 'waiting' | 'active' | 'completed' | 'error';
 
+interface WagerFields {
+  player1: string;
+  player2: string;
+  amount: string;
+  status: number;
+  winner: string;
+  balance: {
+    value: string;
+  };
+}
+
+interface WagerContent {
+  dataType: 'moveObject';
+  type: string;
+  hasPublicTransfer: boolean;
+  fields: WagerFields;
+}
+
+interface WagerObject {
+  data: {
+    content: WagerContent;
+  } | null;
+}
+
 const WAGER_PACKAGE_ID = '0x20ad981130ccd80717f6c780f220b5d7c6c79b9a59c7be96f04f263811bb481c';
 
 export default function GamePage() {
@@ -132,13 +156,7 @@ export default function GamePage() {
         throw new Error('No wager ID found');
       }
 
-      setWagerStatus('waiting');
-      setErrorMessage(null);
-
-      const tx = new TransactionBlock();
-      tx.setGasBudget(100000000);
-
-      // Get the wager object to get the amount
+      // Get the wager object to check the creator
       const wagerObject = await suiClient.getObject({
         id: wagerId,
         options: {
@@ -149,6 +167,18 @@ export default function GamePage() {
       if (!wagerObject.data?.content) {
         throw new Error('Failed to get wager details');
       }
+
+      // Check if the joining account is the same as the creator
+      const creatorAddress = wagerObject.data.content.fields.player1;
+      if (creatorAddress === account.address) {
+        throw new Error('Please switch to a different account to join this wager. You cannot join your own wager.');
+      }
+
+      setWagerStatus('waiting');
+      setErrorMessage(null);
+
+      const tx = new TransactionBlock();
+      tx.setGasBudget(100000000);
 
       const wagerAmountInMist = BigInt(wagerObject.data.content.fields.amount);
 
@@ -305,6 +335,32 @@ export default function GamePage() {
       setWagerStatus('waiting');
       setErrorMessage(null);
 
+      // Get the wager object first to verify its state
+      const response = await suiClient.getObject({
+        id: wagerId,
+        options: {
+          showContent: true,
+          showOwner: true,
+        }
+      });
+
+      if (!response.data?.content || response.data.content.dataType !== 'moveObject') {
+        throw new Error('Failed to get wager details');
+      }
+
+      const fields = (response.data.content as any).fields as WagerFields;
+      const wagerAmount = BigInt(fields.amount);
+
+      // Verify the wager is in completed state
+      if (fields.status !== 2) {
+        throw new Error('Wager is not in completed state');
+      }
+
+      // Verify the current user is the winner
+      if (fields.winner !== account.address) {
+        throw new Error('Only the winner can claim the winnings');
+      }
+
       const tx = new TransactionBlock();
       tx.setGasBudget(100000000);
 
@@ -326,6 +382,7 @@ export default function GamePage() {
                 showEffects: true,
                 showEvents: true,
                 showBalanceChanges: true,
+                showObjectChanges: true,
               },
             });
 
@@ -337,15 +394,33 @@ export default function GamePage() {
               const gasUsed = txResponse.effects.gasUsed || { computationCost: 0, storageCost: 0, storageRebate: 0 };
               const totalGas = (BigInt(gasUsed.computationCost) + BigInt(gasUsed.storageCost) - BigInt(gasUsed.storageRebate)) / BigInt(1_000_000_000);
               
+              // Log balance changes
+              const balanceChanges = txResponse.effects.balanceChanges || [];
+              const winnings = balanceChanges.find(change => 
+                change.owner.AddressOwner === account.address
+              );
+              
+              const winningsAmount = winnings ? BigInt(winnings.amount) / BigInt(1_000_000_000) : BigInt(0);
+              
               toast.success(
                 `Winnings claimed successfully!\n` +
+                `Amount received: ${winningsAmount.toString()} SUI\n` +
                 `Gas used: ${totalGas.toString()} SUI\n` +
                 `Transaction ID: ${response.digest}`
               );
               
+              // Log the transaction details to console for debugging
+              console.log('Transaction details:', {
+                digest: response.digest,
+                effects: txResponse.effects,
+                balanceChanges,
+                winningsAmount,
+                gasUsed: totalGas,
+              });
+              
               setIsWagerDialogOpen(false);
             } else {
-              throw new Error('Transaction failed');
+              throw new Error(`Transaction failed: ${txResponse.effects?.status.error || 'Unknown error'}`);
             }
           } catch (error) {
             console.error('Error handling transaction response:', error);
