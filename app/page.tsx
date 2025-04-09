@@ -22,10 +22,11 @@ export default function Home() {
             priority
           />
         </div>
-        <div className="relative z-10 w-full max-w-4xl mx-auto px-4">
+        <div className="relative z-10 w-full mx-auto px-4">
           <TextPressure 
             text="KNIGHTINGALE"
-            fontFamily="Press Start 2P"
+            fontFamily="Gia Variable"
+            fontUrl='./GiaVariable.otf'
             className="text-center"
           />
           <div className="flex flex-wrap justify-center gap-6 mt-12">
