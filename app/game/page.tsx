@@ -1,16 +1,19 @@
 "use client";
 import { Button } from "@/components/ui/button";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
 import { useState, ChangeEvent } from "react";
 import { useCurrentAccount, useSignAndExecuteTransaction, ConnectButton, useCurrentWallet, useAccounts, useSuiClient } from "@mysten/dapp-kit";
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from "@/components/ui/dialog";
+import { Dialog } from "@/components/ui/dialog";
+import { DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from "@/components/ui/dialog";
 import { TransactionBlock } from '@mysten/sui.js/transactions';
 import { SuiTransactionBlockResponse } from '@mysten/sui.js/client';
 import { useWallet } from '@suiet/wallet-kit';
 import { Input } from '@/components/ui/input';
 import { bcs } from '@mysten/sui/bcs';
 import { toast } from "react-hot-toast";
+import RetroLeaderboardTable from "@/components/RetroLeaderboardTable";
+import GameControlsPopup from "@/components/GameControlsPopup";
 
 type WagerStatus = 'idle' | 'waiting' | 'active' | 'completed' | 'error';
 
@@ -53,6 +56,8 @@ export default function GamePage() {
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [joinWagerId, setJoinWagerId] = useState('');
   const [creatorAddress, setCreatorAddress] = useState<string | null>(null);
+  const [showLeaderboard, setShowLeaderboard] = useState(false);
+  const [showControls, setShowControls] = useState(false);
 
   const handleWagerAmountChange = (e: ChangeEvent<HTMLInputElement>) => {
     setWagerAmount(e.target.value);
@@ -447,13 +452,8 @@ export default function GamePage() {
       <div className="fixed top-0 left-0 right-0 z-50 bg-black/80 backdrop-blur-sm">
         <div className="container mx-auto px-4 py-4">
           <div className="flex items-center justify-between">
-            <h1 className="text-2xl font-bold">NFT Game</h1>
+            <h1 className="text-2xl font-bold font-press-start-2p">NFT Game</h1>
             <div className="flex items-center gap-4">
-              <Link href="/">
-                <Button variant="outline" className="border-gray-800 text-white hover:bg-gray-800">
-                  Back to Home
-                </Button>
-              </Link>
               <ConnectButton />
             </div>
           </div>
@@ -463,66 +463,97 @@ export default function GamePage() {
       {/* Main Content */}
       <div className="container mx-auto px-4 pt-24 pb-12">
         <div className="max-w-4xl mx-auto text-center">
-          <h2 className="text-4xl font-bold mb-6">Welcome to the Game!</h2>
-          <p className="text-xl text-gray-300 mb-8">
-            Create a wager and challenge your friend to a game!
+          <h2 className="text-4xl font-bold mb-6 font-press-start-2p">Duel Your Opponent</h2>
+          <p className="text-xl text-gray-300 mb-8 font-press-start-2p">
+            Wager against thy foe and seek for the worthy warrior
           </p>
 
           {/* Game Area */}
-          <div className="relative w-full aspect-square max-w-2xl mx-auto bg-gray-900 rounded-xl overflow-hidden">
-            <motion.div
-              className="absolute inset-0 flex items-center justify-center"
-              animate={{
-                scale: [1, 1.1, 1],
-                rotate: [0, 5, -5, 0],
+          <div className="relative w-full mx-auto overflow-hidden" style={{ maxWidth: '1920px' }}>
+            <iframe
+              src="/game/New Game Project.html"
+              className="w-full"
+              allow="fullscreen"
+              style={{ 
+                border: 'none',
+                aspectRatio: '16/9',
+                width: '100%',
+                height: '100%',
+                display: 'block'
               }}
-              transition={{
-                duration: 2,
-                repeat: Infinity,
-                repeatType: "reverse",
-              }}
-            >
-              <div className="text-6xl">🎮</div>
-            </motion.div>
+            />
           </div>
 
           {/* Game Controls */}
           <div className="mt-8 flex justify-center gap-4">
             <Button 
-              className="bg-white text-black hover:bg-gray-200 px-8 py-6 text-lg"
+              className="bg-white text-black hover:bg-gray-200 px-8 py-6 text-lg font-press-start-2p"
               onClick={() => setIsWagerDialogOpen(true)}
               disabled={!account}
             >
               {wagerId ? 'View Wager' : 'Create Wager'}
             </Button>
-          </div>
-
-          {/* Game Stats */}
-          <div className="mt-12 grid grid-cols-3 gap-8">
-            <div className="bg-gray-900 p-6 rounded-xl">
-              <h3 className="text-2xl font-bold mb-2">High Score</h3>
-              <p className="text-4xl text-blue-400">0</p>
-            </div>
-            <div className="bg-gray-900 p-6 rounded-xl">
-              <h3 className="text-2xl font-bold mb-2">NFTs Collected</h3>
-              <p className="text-4xl text-green-400">0</p>
-            </div>
-            <div className="bg-gray-900 p-6 rounded-xl">
-              <h3 className="text-2xl font-bold mb-2">Rewards Earned</h3>
-              <p className="text-4xl text-yellow-400">0 SUI</p>
-            </div>
+            <Button 
+              className="bg-white text-black hover:bg-gray-200 px-8 py-6 text-lg font-press-start-2p"
+              onClick={() => setShowLeaderboard(!showLeaderboard)}
+            >
+              Leaderboard
+            </Button>
+            <Button 
+              className="bg-white text-black hover:bg-gray-200 px-8 py-6 text-lg font-press-start-2p"
+              onClick={() => setShowControls(!showControls)}
+            >
+              How to Play
+            </Button>
           </div>
         </div>
       </div>
+
+      {/* Leaderboard Section */}
+      {showLeaderboard && (
+        <div className="fixed inset-0 flex items-center justify-center z-50 overflow-hidden">
+          <div className="fixed inset-0 bg-black/70 backdrop-blur-sm" onClick={() => setShowLeaderboard(false)} />
+          <div className="relative bg-black border border-gray-800 rounded-lg p-6 max-w-4xl w-full mx-4 overflow-hidden">
+            <button 
+              onClick={() => setShowLeaderboard(false)}
+              className="absolute top-4 right-4 text-gray-400 hover:text-white"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
+            <h2 className="text-2xl font-bold mb-6 font-press-start-2p">Leaderboard</h2>
+            <RetroLeaderboardTable />
+          </div>
+        </div>
+      )}
+
+      {/* Controls Section */}
+      {showControls && (
+        <div className="fixed inset-0 flex items-center justify-center z-50 overflow-hidden">
+          <div className="fixed inset-0 bg-black/70 backdrop-blur-sm" onClick={() => setShowControls(false)} />
+          <div className="relative bg-black border border-gray-800 rounded-lg p-6 max-w-2xl w-full mx-4 overflow-hidden">
+            <button 
+              onClick={() => setShowControls(false)}
+              className="absolute top-4 right-4 text-gray-400 hover:text-white"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
+            <GameControlsPopup />
+          </div>
+        </div>
+      )}
 
       {/* Wager Dialog */}
       <Dialog open={isWagerDialogOpen} onOpenChange={setIsWagerDialogOpen}>
         <DialogContent className="bg-black text-white border-gray-800">
           <DialogHeader>
-            <DialogTitle className="text-2xl font-bold">
+            <DialogTitle className="text-2xl font-bold font-press-start-2p">
               {wagerId ? 'Wager Details' : 'Create Wager'}
             </DialogTitle>
-            <DialogDescription className="text-gray-400">
+            <DialogDescription className="text-gray-400 font-press-start-2p">
               {wagerId ? 'View and manage your wager' : 'Set up a wager for your next game'}
             </DialogDescription>
           </DialogHeader>
@@ -532,24 +563,24 @@ export default function GamePage() {
             <div className="mt-6 space-y-6">
               <div className="space-y-4">
                 <div className="flex justify-between items-center">
-                  <span className="text-gray-400">Your Wallet</span>
+                  <span className="text-gray-400 font-press-start-2p">Your Wallet</span>
                   <ConnectButton />
                 </div>
                 <div className="flex justify-between items-center">
-                  <span className="text-gray-400">Amount (SUI)</span>
+                  <span className="text-black-400 font-press-start-2p">Amount (SUI)</span>
                   <Input
                     type="number"
                     value={wagerAmount}
                     onChange={handleWagerAmountChange}
-                    placeholder="Enter amount (e.g., 1.0)"
-                    className="w-32 text-right bg-gray-700 text-white px-3 py-2 rounded-md border border-gray-600 focus:border-blue-500 focus:ring-1 focus:ring-blue-500 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+                    placeholder="Enter amount"
+                    className="w-32 text-right bg-black text-white px-3 py-2 rounded-md border border-gray-300 focus:border-blue-200 focus:ring-1 focus:ring-blue-300 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none font-press-start-2p"
                   />
                 </div>
               </div>
               {wagerStatus === 'waiting' && (
                 <div className="flex items-center justify-center gap-2">
                   <div className="w-5 h-5 border-2 border-orange-400 border-t-transparent rounded-full animate-spin" />
-                  <span className="text-orange-400 font-medium">Creating your wager...</span>
+                  <span className="text-orange-400 font-medium font-press-start-2p">Creating your wager...</span>
                 </div>
               )}
             </div>
@@ -558,18 +589,18 @@ export default function GamePage() {
             <div className="mt-6 space-y-6">
               <div className="space-y-4">
                 <div className="flex flex-col gap-2">
-                  <span className="text-gray-400">Wager ID</span>
+                  <span className="text-gray-400 font-press-start-2p">Wager ID</span>
                   <code className="font-mono text-sm bg-gray-900 p-3 rounded break-all text-green-400">
                     {wagerId}
                   </code>
                 </div>
                 <div className="flex flex-col gap-2">
-                  <span className="text-gray-400">Amount</span>
+                  <span className="text-gray-400 font-press-start-2p">Amount</span>
                   <span className="font-mono text-lg text-green-400">{wagerAmount} SUI</span>
                 </div>
                 <div className="flex flex-col gap-2">
-                  <span className="text-gray-400">Status</span>
-                  <span className={`font-medium ${
+                  <span className="text-gray-400 font-press-start-2p">Status</span>
+                  <span className={`font-press-start-2p ${
                     wagerStatus === 'waiting' ? 'text-orange-400' :
                     wagerStatus === 'active' ? 'text-blue-400' :
                     wagerStatus === 'completed' ? 'text-green-400' :
@@ -585,11 +616,11 @@ export default function GamePage() {
               {wagerStatus === 'waiting' && (
                 <div className="space-y-4">
                   <div className="text-center">
-                    <p className="text-gray-400 mb-4">Waiting for opponent to join...</p>
+                    <p className="text-gray-400 mb-4 font-press-start-2p">Waiting for opponent to join...</p>
                     <div className="flex flex-col gap-4">
                       <Button
                         onClick={handleJoinWager}
-                        className="w-full bg-blue-600 hover:bg-blue-700"
+                        className="w-full bg-blue-600 hover:bg-blue-700 font-press-start-2p"
                         disabled={!account}
                       >
                         Join Wager
@@ -602,17 +633,17 @@ export default function GamePage() {
               {wagerStatus === 'active' && (
                 <div className="space-y-4">
                   <div className="text-center">
-                    <p className="text-gray-400 mb-4">Select the winner:</p>
+                    <p className="text-gray-400 mb-4 font-press-start-2p">Select the winner:</p>
                     <div className="flex flex-col gap-4">
                       <Button
                         onClick={() => handleSetWinner('player1')}
-                        className="w-full bg-blue-600 hover:bg-blue-700"
+                        className="w-full bg-blue-600 hover:bg-blue-700 font-press-start-2p"
                       >
                         Player 1 Wins
                       </Button>
                       <Button
                         onClick={() => handleSetWinner('player2')}
-                        className="w-full bg-blue-600 hover:bg-blue-700"
+                        className="w-full bg-blue-600 hover:bg-blue-700 font-press-start-2p"
                       >
                         Player 2 Wins
                       </Button>
@@ -624,11 +655,11 @@ export default function GamePage() {
               {wagerStatus === 'completed' && (
                 <div className="space-y-4">
                   <div className="text-center">
-                    <p className="text-green-400 mb-4">Wager completed! Winner has been set.</p>
+                    <p className="text-green-400 mb-4 font-press-start-2p">Wager completed! Winner has been set.</p>
                     <div className="flex flex-col gap-4">
                       <Button
                         onClick={handleClaimWinnings}
-                        className="w-full bg-green-600 hover:bg-green-700"
+                        className="w-full bg-green-600 hover:bg-green-700 font-press-start-2p"
                       >
                         Claim Winnings
                       </Button>
@@ -641,7 +672,7 @@ export default function GamePage() {
 
           {errorMessage && (
             <div className="mt-4 p-4 bg-red-900/50 text-red-200 rounded-md">
-              <p className="font-mono text-sm">{errorMessage}</p>
+              <p className="font-mono text-sm font-press-start-2p">{errorMessage}</p>
             </div>
           )}
 
@@ -654,14 +685,14 @@ export default function GamePage() {
                   setWagerStatus('idle');
                 }
               }}
-              className="border-gray-800 text-white hover:bg-gray-800 px-6"
+              className="border-gray-800 text-black hover:bg-gray-800 px-6 font-press-start-2p"
             >
               {wagerId ? 'Close' : 'Cancel'}
             </Button>
             {!wagerId && (
               <Button
                 onClick={handleCreateWager}
-                className="bg-white text-black hover:bg-gray-200 px-6"
+                className="bg-white text-black hover:bg-gray-200 px-6 font-press-start-2p"
                 disabled={wagerStatus === 'waiting'}
               >
                 {wagerStatus === 'waiting' ? (
@@ -680,15 +711,15 @@ export default function GamePage() {
 
       {errorMessage && (
         <div className="mt-4 p-4 bg-red-900/50 text-red-200 rounded-md max-w-md mx-auto">
-          <p className="font-mono text-sm">{errorMessage}</p>
+          <p className="font-mono text-sm font-press-start-2p">{errorMessage}</p>
         </div>
       )}
 
       {wagerId && (
         <div className="mt-8 bg-gray-800 rounded-lg p-6">
-          <h2 className="text-xl font-semibold mb-4">Active Wager</h2>
-          <p className="font-mono text-sm mb-2">Wager ID: {wagerId}</p>
-          <p className="text-gray-400">
+          <h2 className="text-xl font-semibold mb-4 font-press-start-2p">Active Wager</h2>
+          <p className="font-mono text-sm mb-2">{wagerId}</p>
+          <p className="text-gray-400 font-press-start-2p">
             {wagerStatus === 'active' ? 'Game in progress...' : 'Waiting for opponent...'}
           </p>
         </div>

@@ -11,8 +11,7 @@ import { getFullnodeUrl } from '@mysten/sui.js/client';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { NFT_STORE_CONFIG } from '@/config/nft-store';
 import { SuiClient } from '@mysten/sui.js/client';
-import Link from "next/link";
-import { motion } from "framer-motion";
+import ASCIIText from "@/components/ASCIIText";
 
 const queryClient = new QueryClient();
 
@@ -32,59 +31,59 @@ interface NFT {
 const NFT_TEMPLATES = [
   {
     id: "1",
-    name: "Cosmic Explorer",
+    name: "Pixel Pioneer",
     price: "0.5",
     image: "https://picsum.photos/400/400?random=1",
-    description: "A journey through the cosmos"
+    description: "A digital explorer forging new paths in the pixelated frontier"
   },
   {
     id: "2",
-    name: "Digital Dreamer",
+    name: "Neon Nomad",
     price: "0.3",
     image: "https://picsum.photos/400/400?random=2",
-    description: "Where reality meets imagination"
+    description: "Wanderer of the digital cityscapes, leaving trails of light"
   },
   {
     id: "3",
-    name: "Neon Warrior",
+    name: "Quantum Quasar",
     price: "0.7",
     image: "https://picsum.photos/400/400?random=3",
-    description: "Fight in the digital realm"
+    description: "A cosmic entity bridging the gap between dimensions"
   },
   {
     id: "4",
-    name: "Cyber Samurai",
+    name: "Cyber Sentinel",
     price: "0.8",
     image: "https://picsum.photos/400/400?random=4",
-    description: "Ancient warrior in digital age"
+    description: "Guardian of the digital realm, watching over the virtual world"
   },
   {
     id: "5",
-    name: "Quantum Explorer",
+    name: "Holographic Hero",
     price: "0.6",
     image: "https://picsum.photos/400/400?random=5",
-    description: "Journey through quantum realms"
+    description: "A legendary figure projected from the future into our present"
   },
   {
     id: "6",
-    name: "Digital Phoenix",
+    name: "Digital Druid",
     price: "0.9",
     image: "https://picsum.photos/400/400?random=6",
-    description: "Rise from digital ashes"
+    description: "Master of the digital elements, weaving code like magic"
   },
   {
     id: "7",
-    name: "Neon Nomad",
+    name: "Retro Rogue",
     price: "0.4",
     image: "https://picsum.photos/400/400?random=7",
-    description: "Wanderer of digital cities"
+    description: "A throwback character with modern twists, breaking the rules"
   },
   {
     id: "8",
-    name: "Cyber Guardian",
+    name: "Virtual Voyager",
     price: "0.7",
     image: "https://picsum.photos/400/400?random=8",
-    description: "Protector of digital realms"
+    description: "An explorer charting unknown territories in the metaverse"
   }
 ];
 
@@ -300,153 +299,118 @@ function StoreContent() {
   };
 
   return (
-    <div className="min-h-screen bg-black text-white relative overflow-hidden">
-      {/* Animated Background */}
-      <div className="absolute inset-0 z-0">
-        <div className="absolute inset-0 bg-gradient-to-br from-blue-900/20 via-purple-900/20 to-black animate-gradient" />
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(255,255,255,0.1),transparent_50%)] animate-pulse" />
-        <div className="absolute inset-0 bg-[url('/images/grid.svg')] opacity-10" />
-      </div>
-
-      {/* Decorative Elements */}
-      <div className="absolute inset-0 z-0">
-        <div className="absolute top-0 left-0 w-96 h-96 bg-blue-500/10 rounded-full blur-3xl animate-pulse" />
-        <div className="absolute bottom-0 right-0 w-96 h-96 bg-purple-500/10 rounded-full blur-3xl animate-pulse" />
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-pink-500/10 rounded-full blur-3xl animate-pulse" />
-      </div>
-
-      {/* Content */}
-      <div className="relative z-10">
-        {/* Header Section */}
-        <div className="fixed top-0 left-0 right-0 z-50 bg-black/80 backdrop-blur-sm border-b border-gray-800">
-          <div className="container mx-auto px-4 py-4">
-            <div className="flex items-center justify-between">
-              <h1 className="text-2xl font-light tracking-wide text-white">NFT Store</h1>
-              <div className="flex items-center gap-4">
-                <ConnectButton connectText="Connect Wallet" />
-              </div>
+    <div className="min-h-screen bg-black">
+      {/* Header Section */}
+      <div className="fixed top-0 left-0 right-0 z-50 bg-black/80 backdrop-blur-sm">
+        <div className="container mx-auto px-4 py-4">
+          <div className="flex items-center justify-between">
+            <h1 className="text-4xl font-bold text-white tracking-wide">NFT STORE</h1>
+            <div className="flex items-center gap-4">
+              <ConnectButton connectText="Connect Wallet" />
             </div>
           </div>
         </div>
+      </div>
 
-        {/* Main Content */}
-        <div className="container mx-auto px-4 pt-24 pb-12">
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8 max-w-7xl mx-auto">
-            {NFT_TEMPLATES.map((nft) => (
-              <CardContainer 
-                key={nft.id} 
-                className="w-full h-full"
-                containerClassName="w-full h-full"
-              >
-                <CardBody className="bg-black/50 backdrop-blur-sm relative group/card hover:shadow-2xl hover:shadow-gray-500/[0.1] border-gray-800 w-full h-full rounded-xl p-6 border transition-all duration-300">
-                  <CardItem
-                    translateZ="50"
-                    className="text-xl font-light text-white"
-                  >
-                    <div className="relative w-full h-64 mb-6 overflow-hidden rounded-xl bg-gray-900/50">
-                      <img
-                        src={nft.image}
-                        alt={nft.name}
-                        className="w-full h-full object-cover rounded-xl group-hover/card:shadow-xl transition-transform duration-300 group-hover/card:scale-105"
-                        loading="lazy"
-                      />
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
-                    </div>
-                  </CardItem>
-                  <CardItem
-                    as="h3"
-                    translateZ="60"
-                    className="text-xl font-light mb-3 text-white tracking-wide"
-                  >
-                    {nft.name}
-                  </CardItem>
-                  <CardItem
-                    translateZ="40"
-                    className="text-gray-400 mb-4 text-sm font-light"
-                  >
-                    {nft.description}
-                  </CardItem>
-                  <div className="flex justify-between items-center mt-6">
-                    <CardItem
-                      translateZ={20}
-                      translateX={-5}
-                      as="span"
-                      className="text-lg font-light text-white"
-                    >
-                      {nft.price} SUI
-                    </CardItem>
-                    <CardItem
-                      translateZ={20}
-                      translateX={5}
-                      as="button"
-                      onClick={() => {
-                        if (!account) {
-                          showCustomNotification(
-                            'Wallet Not Connected',
-                            'Please connect your wallet first',
-                            'info'
-                          );
-                          return;
-                        }
-                        setSelectedNFT(nft);
-                        setShowMintDialog(true);
-                      }}
-                      className="px-6 py-2 rounded-xl bg-white/10 text-white text-sm font-light hover:bg-white/20 transition-all duration-300 hover:scale-105"
-                    >
-                      {account ? "Mint Now" : "Connect to Mint"}
-                    </CardItem>
+      {/* Main Content */}
+      <div className="container mx-auto px-4 pt-24 pb-12">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8 max-w-7xl mx-auto">
+          {NFT_TEMPLATES.map((nft) => (
+            <CardContainer 
+              key={nft.id} 
+              className="w-full h-full"
+              containerClassName="w-full h-full"
+            >
+              <CardBody className="bg-black relative group/card hover:shadow-2xl hover:shadow-gray-500/[0.1] border-gray-800 w-full h-full rounded-xl p-6 border">
+                <CardItem
+                  translateZ="50"
+                  className="text-xl font-bold text-white"
+                >
+                  <div className="relative w-full h-64 mb-6 overflow-hidden rounded-xl bg-gray-900">
+                    <img
+                      src={nft.image}
+                      alt={nft.name}
+                      className="w-full h-full object-cover rounded-xl group-hover/card:shadow-xl"
+                      loading="lazy"
+                    />
                   </div>
-                </CardBody>
-              </CardContainer>
-            ))}
-          </div>
+                </CardItem>
+                <CardItem
+                  as="h3"
+                  translateZ="60"
+                  className="text-xl font-bold mb-3 text-white"
+                >
+                  {nft.name}
+                </CardItem>
+                <CardItem
+                  translateZ="40"
+                  className="text-gray-400 mb-4"
+                >
+                  {nft.description}
+                </CardItem>
+                <div className="flex justify-between items-center mt-6">
+                  <CardItem
+                    translateZ={20}
+                    translateX={-5}
+                    as="span"
+                    className="text-lg font-bold text-white"
+                  >
+                    {nft.price} SUI
+                  </CardItem>
+                  <CardItem
+                    translateZ={20}
+                    translateX={5}
+                    as="button"
+                    onClick={() => {
+                      if (!account) {
+                        showCustomNotification(
+                          'Wallet Not Connected',
+                          'Please connect your wallet first',
+                          'info'
+                        );
+                        return;
+                      }
+                      setSelectedNFT(nft);
+                      setShowMintDialog(true);
+                    }}
+                    className="px-6 py-2 rounded-xl bg-white text-black text-sm font-bold hover:scale-105 transition-transform hover:bg-gray-200"
+                  >
+                    {account ? "Mint Now" : "Connect to Mint"}
+                  </CardItem>
+                </div>
+              </CardBody>
+            </CardContainer>
+          ))}
         </div>
       </div>
 
       {/* Notification Dialog */}
       <Dialog open={showNotification} onOpenChange={setShowNotification}>
-        <DialogContent className="bg-black/90 backdrop-blur-sm text-white border-gray-800">
+        <DialogContent className="bg-black text-white border-gray-800">
           <DialogHeader>
-            <DialogTitle className={`text-xl font-light tracking-wide ${
-              notification?.type === 'success' ? 'text-green-400' : 
-              notification?.type === 'error' ? 'text-red-400' : 
-              'text-blue-400'
-            }`}>
+            <DialogTitle className={notification?.type === 'success' ? 'text-green-500' : 
+                               notification?.type === 'error' ? 'text-red-500' : 
+                               'text-blue-500'}>
               {notification?.title}
             </DialogTitle>
-            <DialogDescription className="text-gray-400 font-light">
+            <DialogDescription>
               {notification?.message}
             </DialogDescription>
           </DialogHeader>
-          <div className="mt-6 flex justify-end gap-4">
-            {notification?.type === 'success' && (
-              <motion.button
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                className="px-8 py-4 rounded-xl bg-white/10 text-white font-light text-lg hover:bg-white/20 transition-all duration-300"
-                onClick={() => {
-                  setShowNotification(false);
-                  setShowMintDialog(false);
-                }}
-              >
-                View NFT
-              </motion.button>
-            )}
-            <motion.button
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              className="px-8 py-4 rounded-xl bg-white/10 text-white font-light text-lg hover:bg-white/20 transition-all duration-300"
+          <div className="mt-6 flex justify-end">
+            <Button
               onClick={() => setShowNotification(false)}
+              className="bg-white text-black hover:bg-gray-200"
             >
               Close
-            </motion.button>
+            </Button>
           </div>
         </DialogContent>
       </Dialog>
 
       {/* Mint Dialog */}
       <Dialog open={showMintDialog} onOpenChange={setShowMintDialog}>
-        <DialogContent className="bg-black text-white border-gray-800 max-h-[90vh] overflow-y-auto">
+        <DialogContent className="bg-black text-white border-gray-800 max-w-[90vw] w-full max-h-[90vh] overflow-y-auto">
           <DialogHeader>
             <DialogTitle className="text-2xl font-bold">Mint NFT</DialogTitle>
             <DialogDescription className="text-gray-400">
@@ -468,9 +432,9 @@ function StoreContent() {
             <div className="space-y-4">
               <div className="flex justify-between items-center">
                 <span className="text-gray-400">Name</span>
-                <span className="font-medium text-right max-w-[60%] break-words">{selectedNFT?.name}</span>
+                <span className="font-medium text-right">{selectedNFT?.name}</span>
               </div>
-              <div className="flex justify-between items-start">
+              <div className="flex justify-between items-center">
                 <span className="text-gray-400">Description</span>
                 <span className="font-medium text-right max-w-[60%] break-words">{selectedNFT?.description}</span>
               </div>
@@ -478,9 +442,9 @@ function StoreContent() {
                 <span className="text-gray-400">Price</span>
                 <span className="font-medium text-blue-400">{selectedNFT?.price} SUI</span>
               </div>
-              <div className="flex justify-between items-start">
+              <div className="flex justify-between items-center">
                 <span className="text-gray-400">Wallet Address</span>
-                <span className="font-mono text-sm text-gray-300 text-right max-w-[60%] break-all">{account?.address}</span>
+                <span className="font-mono text-sm text-gray-300 break-all">{account?.address}</span>
               </div>
             </div>
 
@@ -498,34 +462,30 @@ function StoreContent() {
             )}
           </div>
 
-          {/* Action Buttons - Fixed at bottom */}
-          <div className="sticky bottom-0 bg-black pt-4 mt-6 border-t border-gray-800">
-            <div className="flex justify-end gap-4">
-              <motion.button
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                className="bg-white/10 text-white px-8 py-4 rounded-xl font-light text-lg hover:bg-white/20 transition-all duration-300"
-                onClick={() => setShowMintDialog(false)}
-              >
-                Cancel
-              </motion.button>
-              <motion.button
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                className="bg-white text-black px-8 py-4 rounded-lg font-bold text-xl hover:bg-gray-200 transition-colors"
-                style={{ fontFamily: 'Minecraft' }}
-                onClick={() => selectedNFT && handleMintNFT(selectedNFT)}
-              >
-                {mintingStatus === 'minting' ? (
-                  <div className="flex items-center gap-2">
-                    <div className="w-4 h-4 border-2 border-black border-t-transparent rounded-full animate-spin" />
-                    <span>Minting...</span>
-                  </div>
-                ) : (
-                  'Confirm Mint'
-                )}
-              </motion.button>
-            </div>
+          {/* Action Buttons */}
+          <div className="mt-8 flex justify-end gap-4">
+            <Button
+              variant="outline"
+              onClick={() => setShowMintDialog(false)}
+              className="border-gray-800 text-black hover:bg-gray-800 px-6"
+              disabled={mintingStatus === 'minting'}
+            >
+              Cancel
+            </Button>
+            <Button
+              onClick={() => selectedNFT && handleMintNFT(selectedNFT)}
+              className="bg-white text-black hover:bg-gray-200 px-6"
+              disabled={mintingStatus === 'minting'}
+            >
+              {mintingStatus === 'minting' ? (
+                <div className="flex items-center gap-2">
+                  <div className="w-4 h-4 border-2 border-black border-t-transparent rounded-full animate-spin" />
+                  <span>Minting...</span>
+                </div>
+              ) : (
+                'Confirm Mint'
+              )}
+            </Button>
           </div>
         </DialogContent>
       </Dialog>
