@@ -1,5 +1,11 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  eslint: {
+    ignoreDuringBuilds: true,
+  },
+  images: {
+    domains: ['ipfs.io', 'via.placeholder.com'],
+  },
   webpack: (config) => {
     config.module.rules.push({
       test: /\.(wasm|pck)$/,

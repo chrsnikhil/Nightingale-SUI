@@ -1,4 +1,5 @@
 "use client";
+import React from 'react';
 import { CardContainer, CardBody, CardItem } from "@/components/ui/3d-card";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
@@ -20,10 +21,10 @@ const { networkConfig } = createNetworkConfig({
   mainnet: { url: getFullnodeUrl('mainnet') },
 });
 
-interface NFT {
+interface StoreItem {
   id: string;
   name: string;
-  price: string;
+  price: number;
   image: string;
   description: string;
 }
@@ -32,56 +33,56 @@ const NFT_TEMPLATES = [
   {
     id: "1",
     name: "The Battle",
-    price: "0.5",
+    price: 0.5,
     image: "https://ipfs.io/ipfs/bafybeihp6xkhvvvxblwjxgs7pa6gur7e3haja7gyxr4nqcl764sm6qzmhi",
     description: "Two Knights battling for days for the glory of the SUI under the harsh sun"
   },
   {
     id: "2",
     name: "KnightBros",
-    price: "0.3",
+    price: 0.3,
     image: "https://ipfs.io/ipfs/bafybeicyj7cmgrafjddvlsemtm2vs5qjirwe5hhilzay2beovtya4zrmq4",
     description: "Twas the day the knights threw their swords and dilly dallied in the field"
   },
   {
     id: "3",
     name: "Dragon Slayer",
-    price: "0.7",
+    price: 0.7,
     image: "https://ipfs.io/ipfs/bafybeidcao25g5avrr7qsjpdgtvorrxravzkqwqdvslm3onrxir67ymxra",
     description: "Two fearless warriors who has conquered the mightiest beasts"
   },
   {
     id: "4",
     name: "Royal Guardian",
-    price: "0.8",
+    price: 0.8,
     image: "https://ipfs.io/ipfs/bafybeih3u4h2nzzai523ovecynsnrbwp2u726yb4gznexcbkyrxh25a2p4",
     description: "The sworn protector of the kingdom's NFT's and the chain"
   },
   {
     id: "5",
     name: "Bullseye",
-    price: "0.6",
+    price: 0.6,
     image: "https://ipfs.io/ipfs/bafybeiekhdoojdwnctpnbddgvxwgw2gt2tlrngbslxglyajuhiaaqq62w4",
     description: "Just two SUI knights practicing archery nothing weird right?"
   },
   {
     id: "6",
     name: "KnightBros",
-    price: "0.9",
+    price: 0.9,
     image: "https://ipfs.io/ipfs/bafybeicelxvrf4d2jpgxuu7mhwf3r3tu26qunomhcpl7zrcjco744cqmsq",
     description: "Twas the knight both of them decided to live peacefully and happily"
   },
   {
     id: "7",
     name: "Dawn Sentinel",
-    price: "0.7",
+    price: 0.7,
     image: "https://ipfs.io/ipfs/bafybeigmeu2v4xtid3haay6dndouyafvp5wydzs6b5wwalllshu46rl5pu",
     description: "The first line of defense against the darkness"
   },
   {
     id: "8",
     name: "SuiMasters",
-    price: "0.4",
+    price: 0.4,
     image: "https://ipfs.io/ipfs/bafybeieugypcojfwf7e3ei42tq2o3fbgnr7zs3nvngd3dxkz64rdou4zim",
     description: "I really think i could definetly checkmate in you in 8 moves"
   },
@@ -160,10 +161,13 @@ const globalStyles = `
   }
 `;
 
+// Add a default placeholder image
+const DEFAULT_NFT_IMAGE = "https://via.placeholder.com/500x300?text=Select+NFT";
+
 function StoreContent() {
   const account = useCurrentAccount();
   const { mutate: signAndExecute } = useSignAndExecuteTransaction();
-  const [selectedNFT, setSelectedNFT] = useState<NFT | null>(null);
+  const [selectedNFT, setSelectedNFT] = useState<StoreItem | null>(null);
   const [showMintDialog, setShowMintDialog] = useState(false);
   const [mintingStatus, setMintingStatus] = useState<'idle' | 'minting' | 'success' | 'error'>('idle');
   const [showNotification, setShowNotification] = useState(false);
@@ -178,7 +182,7 @@ function StoreContent() {
     setShowNotification(true);
   };
 
-  const handleMintNFT = async (nft: NFT) => {
+  const handleMintNFT = async (nft: StoreItem) => {
     try {
       if (!account) {
         showCustomNotification(
@@ -271,10 +275,12 @@ function StoreContent() {
                   className="text-xl font-bold text-white"
                 >
                   <div className="relative w-full h-64 mb-6 overflow-hidden rounded-xl bg-gray-900">
-                    <img
+                    <Image
                       src={nft.image}
                       alt={nft.name}
                       className="w-full h-full object-cover rounded-xl group-hover/card:shadow-xl"
+                      width={500}
+                      height={300}
                       loading="lazy"
                     />
                   </div>
@@ -365,10 +371,12 @@ function StoreContent() {
           <div className="mt-6 space-y-6">
             {/* NFT Preview */}
             <div className="relative w-full h-48 overflow-hidden rounded-xl bg-gray-900">
-              <img
-                src={selectedNFT?.image}
-                alt={selectedNFT?.name}
+              <Image
+                src={selectedNFT?.image || DEFAULT_NFT_IMAGE}
+                alt={selectedNFT?.name || "Select an NFT"}
                 className="w-full h-full object-cover"
+                width={500}
+                height={300}
               />
             </div>
 
