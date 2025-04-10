@@ -1,13 +1,14 @@
-import { JsonRpcProvider, Connection, Ed25519Keypair, RawSigner, TransactionBlock } from '@mysten/sui.js';
+import { TransactionBlock } from '@mysten/sui.js/transactions';
+import { SuiClient } from '@mysten/sui.js/client';
+import { Ed25519Keypair } from '@mysten/sui.js/keypairs/ed25519';
 import { fromB64 } from '@mysten/sui.js/utils';
 
 // Initialize connection to Sui testnet
-const connection = new Connection({
-    fullnode: 'https://fullnode.testnet.sui.io:443',
-    faucet: 'https://faucet.testnet.sui.io/gas',
+const client = new SuiClient({
+  url: 'https://fullnode.testnet.sui.io:443'
 });
 
-const provider = new JsonRpcProvider(connection);
+export { client, TransactionBlock, Ed25519Keypair, fromB64 };
 
 // Function to connect wallet
 export async function connectWallet() {
@@ -111,7 +112,7 @@ export async function purchaseNFT(nftId: string, price: number) {
 // Function to get NFT details
 export async function getNFTDetails(nftId: string) {
     try {
-        const nft = await provider.getObject({
+        const nft = await client.getObject({
             id: nftId,
             options: { showContent: true },
         });
