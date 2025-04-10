@@ -20,11 +20,6 @@ module nft_store::nft {
     /// One-Time-Witness for the module
     struct NFT has drop {}
 
-    /// The capability to mint NFTs
-    struct MintCap has key, store {
-        id: UID
-    }
-
     // ===== Events =====
     struct NFTMinted has copy, drop {
         nft_id: address,
@@ -47,19 +42,10 @@ module nft_store::nft {
         
         transfer::public_transfer(display, tx_context::sender(ctx));
         transfer::public_transfer(publisher, tx_context::sender(ctx));
-
-        // Create and transfer MintCap to the specified wallet
-        let mint_cap = MintCap {
-            id: object::new(ctx)
-        };
-        
-        // Transfer MintCap to the specified wallet address
-        transfer::transfer(mint_cap, @0x031bbebe4849662736649e76e852bcc502d37502f82f91d55c6695b22c9cd3c0);
     }
 
-    /// Mint a new NFT
+    /// Mint a new NFT - now public without requiring MintCap
     public entry fun mint(
-        _cap: &MintCap,
         name: vector<u8>,
         description: vector<u8>,
         url: vector<u8>,

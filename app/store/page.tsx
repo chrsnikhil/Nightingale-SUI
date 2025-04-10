@@ -9,7 +9,7 @@ import { ConnectButton, useCurrentAccount, useSignAndExecuteTransaction } from '
 import { createNetworkConfig, SuiClientProvider, WalletProvider } from '@mysten/dapp-kit';
 import { getFullnodeUrl } from '@mysten/sui.js/client';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { NFT_STORE_CONFIG } from '@/config/nft-store';
+import { NFT_STORE_CONFIG } from '../../config/nft-store';
 import { SuiClient } from '@mysten/sui.js/client';
 import ASCIIText from "@/components/ASCIIText";
 
@@ -166,7 +166,6 @@ function StoreContent() {
   const [selectedNFT, setSelectedNFT] = useState<NFT | null>(null);
   const [showMintDialog, setShowMintDialog] = useState(false);
   const [mintingStatus, setMintingStatus] = useState<'idle' | 'minting' | 'success' | 'error'>('idle');
-  const [mintCapId, setMintCapId] = useState<string | null>(null);
   const [showNotification, setShowNotification] = useState(false);
   const [notification, setNotification] = useState<{
     title: string;
@@ -179,52 +178,6 @@ function StoreContent() {
     setShowNotification(true);
   };
 
-  // Fetch MintCap object when account changes
-  useEffect(() => {
-    const fetchMintCap = async () => {
-      if (!account) return;
-      
-      try {
-        const client = new SuiClient({ url: getFullnodeUrl('testnet') });
-        const objects = await client.getOwnedObjects({
-          owner: account.address,
-          filter: {
-            StructType: `${NFT_STORE_CONFIG.PACKAGE_ID}::nft::MintCap`
-          },
-          options: {
-            showType: true,
-            showContent: true,
-            showOwner: true,
-            showPreviousTransaction: true,
-            showDisplay: true,
-            showBcs: true,
-            showStorageRebate: true,
-          }
-        });
-
-        if (objects.data.length > 0 && objects.data[0].data?.objectId) {
-          setMintCapId(objects.data[0].data.objectId);
-        } else {
-          console.error('No MintCap found in wallet');
-          showCustomNotification(
-            'MintCap Not Found',
-            'No MintCap found in your wallet. Please contact the contract owner.',
-            'error'
-          );
-        }
-      } catch (error) {
-        console.error('Error fetching MintCap:', error);
-        showCustomNotification(
-          'Error',
-          'Failed to fetch MintCap. Please try again.',
-          'error'
-        );
-      }
-    };
-
-    fetchMintCap();
-  }, [account]);
-
   const handleMintNFT = async (nft: NFT) => {
     try {
       if (!account) {
@@ -236,25 +189,15 @@ function StoreContent() {
         return;
       }
 
-      if (!mintCapId) {
-        showCustomNotification(
-          'MintCap Not Found',
-          'No MintCap found in your wallet. Please contact the contract owner.',
-          'error'
-        );
-        return;
-      }
-
       setMintingStatus('minting');
 
       // Create transaction block
       const tx = new TransactionBlock();
       
-      // Add mint_nft function call
+      // Add mint function call without MintCap
       tx.moveCall({
         target: `${NFT_STORE_CONFIG.PACKAGE_ID}::nft::mint`,
         arguments: [
-          tx.object(mintCapId),
           tx.pure(Array.from(new TextEncoder().encode(nft.name))),
           tx.pure(Array.from(new TextEncoder().encode(nft.description))),
           tx.pure(Array.from(new TextEncoder().encode(nft.image))),

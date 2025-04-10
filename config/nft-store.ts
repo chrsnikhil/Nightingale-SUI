@@ -6,6 +6,9 @@ export const NFT_STORE_CONFIG = {
   COLLECTION_NAME: 'My NFT Collection',
   COLLECTION_DESCRIPTION: 'A collection of unique digital art pieces',
   
+  // MintCap Configuration
+  MINT_CAP_ID: process.env.NEXT_PUBLIC_MINT_CAP_ID || '',
+  
   // NFT Configuration
   METADATA_FIELDS: {
     name: 'string',
@@ -45,4 +48,8 @@ export const NFT_STORE_CONFIG = {
 // Validate configuration
 if (!NFT_STORE_CONFIG.PACKAGE_ID) {
     console.warn('Warning: NEXT_PUBLIC_PACKAGE_ID is not set in environment variables');
+}
+
+if (!NFT_STORE_CONFIG.MINT_CAP_ID) {
+    console.warn('Warning: NEXT_PUBLIC_MINT_CAP_ID is not set in environment variables');
 } 
