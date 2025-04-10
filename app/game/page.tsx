@@ -1,16 +1,12 @@
 "use client";
 import { Button } from "@/components/ui/button";
-import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
 import { useState, ChangeEvent } from "react";
-import { useCurrentAccount, useSignAndExecuteTransaction, ConnectButton, useCurrentWallet, useAccounts, useSuiClient } from "@mysten/dapp-kit";
+import { useCurrentAccount, useSignAndExecuteTransaction, ConnectButton, useSuiClient } from "@mysten/dapp-kit";
 import { Dialog } from "@/components/ui/dialog";
-import { DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from "@/components/ui/dialog";
+import { DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { TransactionBlock } from '@mysten/sui.js/transactions';
-import { SuiTransactionBlockResponse } from '@mysten/sui.js/client';
-import { useWallet } from '@suiet/wallet-kit';
 import { Input } from '@/components/ui/input';
-import { bcs } from '@mysten/sui/bcs';
 import { toast } from "react-hot-toast";
 import RetroLeaderboardTable from "@/components/RetroLeaderboardTable";
 import GameControlsPopup from "@/components/GameControlsPopup";
@@ -35,18 +31,10 @@ interface WagerContent {
   fields: WagerFields;
 }
 
-interface WagerObject {
-  data: {
-    content: WagerContent;
-  } | null;
-}
-
 const WAGER_PACKAGE_ID = '0x20ad981130ccd80717f6c780f220b5d7c6c79b9a59c7be96f04f263811bb481c';
 
 export default function GamePage() {
-  const { currentWallet, connectionStatus } = useCurrentWallet();
   const account = useCurrentAccount();
-  const accounts = useAccounts();
   const { mutate: signAndExecute } = useSignAndExecuteTransaction();
   const suiClient = useSuiClient();
   const [isWagerDialogOpen, setIsWagerDialogOpen] = useState(false);
@@ -54,8 +42,6 @@ export default function GamePage() {
   const [wagerStatus, setWagerStatus] = useState<WagerStatus>('idle');
   const [wagerId, setWagerId] = useState<string | null>(null);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
-  const [joinWagerId, setJoinWagerId] = useState('');
-  const [creatorAddress, setCreatorAddress] = useState<string | null>(null);
   const [showLeaderboard, setShowLeaderboard] = useState(false);
   const [showControls, setShowControls] = useState(false);
 
@@ -109,7 +95,7 @@ export default function GamePage() {
             if (txResponse.effects?.status.status === 'success') {
               // Find the shared object in the created objects
               const sharedObject = txResponse.effects.created?.find(
-                item => 'Shared' in item.owner
+                item => item.owner && typeof item.owner === 'object' && 'Shared' in item.owner
               );
 
               if (sharedObject) {
@@ -174,7 +160,7 @@ export default function GamePage() {
       }
 
       // Check if the joining account is the same as the creator
-      const creatorAddress = wagerObject.data.content.fields.player1;
+      const creatorAddress = (wagerObject.data.content as any).fields.player1;
       if (creatorAddress === account.address) {
         throw new Error('Please switch to a different account to join this wager. You cannot join your own wager.');
       }
@@ -185,7 +171,7 @@ export default function GamePage() {
       const tx = new TransactionBlock();
       tx.setGasBudget(100000000);
 
-      const wagerAmountInMist = BigInt(wagerObject.data.content.fields.amount);
+      const wagerAmountInMist = BigInt((wagerObject.data.content as any).fields.amount);
 
       // Split the coin for the wager amount
       const [coin] = tx.splitCoins(tx.gas, [tx.pure(wagerAmountInMist)]);
@@ -279,7 +265,9 @@ export default function GamePage() {
       console.log('Wager object:', wagerObject);
 
       // Get the winner's address based on the selection
-      const winnerAddress = winner === 'player1' ? wagerObject.data.content.fields.player1 : wagerObject.data.content.fields.player2;
+      const winnerAddress = winner === 'player1' 
+        ? (wagerObject.data.content as any).fields.player1 
+        : (wagerObject.data.content as any).fields.player2;
 
       tx.moveCall({
         target: `${WAGER_PACKAGE_ID}::wager::set_winner`,
@@ -400,8 +388,8 @@ export default function GamePage() {
               const totalGas = (BigInt(gasUsed.computationCost) + BigInt(gasUsed.storageCost) - BigInt(gasUsed.storageRebate)) / BigInt(1_000_000_000);
               
               // Log balance changes
-              const balanceChanges = txResponse.effects.balanceChanges || [];
-              const winnings = balanceChanges.find(change => 
+              const balanceChanges = (txResponse.effects as any).balanceChanges || [];
+              const winnings = balanceChanges.find((change: any) => 
                 change.owner.AddressOwner === account.address
               );
               
