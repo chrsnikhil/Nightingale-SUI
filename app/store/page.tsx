@@ -198,7 +198,7 @@ function StoreContent() {
       // Create transaction block
       const tx = new TransactionBlock();
       
-      // Add mint function call without MintCap
+      // Use the public mint function without MintCap
       tx.moveCall({
         target: `${NFT_STORE_CONFIG.PACKAGE_ID}::nft::mint`,
         arguments: [
