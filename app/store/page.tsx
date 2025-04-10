@@ -31,60 +31,61 @@ interface NFT {
 const NFT_TEMPLATES = [
   {
     id: "1",
-    name: "Pixel Pioneer",
+    name: "The Battle",
     price: "0.5",
-    image: "https://picsum.photos/400/400?random=1",
-    description: "A digital explorer forging new paths in the pixelated frontier"
+    image: "https://ipfs.io/ipfs/bafybeihp6xkhvvvxblwjxgs7pa6gur7e3haja7gyxr4nqcl764sm6qzmhi",
+    description: "Two Knights battling for days for the glory of the SUI under the harsh sun"
   },
   {
     id: "2",
-    name: "Neon Nomad",
+    name: "KnightBros",
     price: "0.3",
-    image: "https://picsum.photos/400/400?random=2",
-    description: "Wanderer of the digital cityscapes, leaving trails of light"
+    image: "https://ipfs.io/ipfs/bafybeicyj7cmgrafjddvlsemtm2vs5qjirwe5hhilzay2beovtya4zrmq4",
+    description: "Twas the day the knights threw their swords and dilly dallied in the field"
   },
   {
     id: "3",
-    name: "Quantum Quasar",
+    name: "Dragon Slayer",
     price: "0.7",
-    image: "https://picsum.photos/400/400?random=3",
-    description: "A cosmic entity bridging the gap between dimensions"
+    image: "https://ipfs.io/ipfs/bafybeidcao25g5avrr7qsjpdgtvorrxravzkqwqdvslm3onrxir67ymxra",
+    description: "Two fearless warriors who has conquered the mightiest beasts"
   },
   {
     id: "4",
-    name: "Cyber Sentinel",
+    name: "Royal Guardian",
     price: "0.8",
-    image: "https://picsum.photos/400/400?random=4",
-    description: "Guardian of the digital realm, watching over the virtual world"
+    image: "https://ipfs.io/ipfs/bafybeih3u4h2nzzai523ovecynsnrbwp2u726yb4gznexcbkyrxh25a2p4",
+    description: "The sworn protector of the kingdom's NFT's and the chain"
   },
   {
     id: "5",
-    name: "Holographic Hero",
+    name: "Bullseye",
     price: "0.6",
-    image: "https://picsum.photos/400/400?random=5",
-    description: "A legendary figure projected from the future into our present"
+    image: "https://ipfs.io/ipfs/bafybeiekhdoojdwnctpnbddgvxwgw2gt2tlrngbslxglyajuhiaaqq62w4",
+    description: "Just two SUI knights practicing archery nothing weird right?"
   },
   {
     id: "6",
-    name: "Digital Druid",
+    name: "KnightBros",
     price: "0.9",
-    image: "https://picsum.photos/400/400?random=6",
-    description: "Master of the digital elements, weaving code like magic"
+    image: "https://ipfs.io/ipfs/bafybeicelxvrf4d2jpgxuu7mhwf3r3tu26qunomhcpl7zrcjco744cqmsq",
+    description: "Twas the knight both of them decided to live peacefully and happily"
   },
   {
     id: "7",
-    name: "Retro Rogue",
-    price: "0.4",
-    image: "https://picsum.photos/400/400?random=7",
-    description: "A throwback character with modern twists, breaking the rules"
+    name: "Dawn Sentinel",
+    price: "0.7",
+    image: "https://ipfs.io/ipfs/bafybeigmeu2v4xtid3haay6dndouyafvp5wydzs6b5wwalllshu46rl5pu",
+    description: "The first line of defense against the darkness"
   },
   {
     id: "8",
-    name: "Virtual Voyager",
-    price: "0.7",
-    image: "https://picsum.photos/400/400?random=8",
-    description: "An explorer charting unknown territories in the metaverse"
-  }
+    name: "SuiMasters",
+    price: "0.4",
+    image: "https://ipfs.io/ipfs/bafybeieugypcojfwf7e3ei42tq2o3fbgnr7zs3nvngd3dxkz64rdou4zim",
+    description: "I really think i could definetly checkmate in you in 8 moves"
+  },
+  
 ];
 
 // Add global styles for wallet modal

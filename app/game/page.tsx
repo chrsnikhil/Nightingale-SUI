@@ -452,8 +452,13 @@ export default function GamePage() {
       <div className="fixed top-0 left-0 right-0 z-50 bg-black/80 backdrop-blur-sm">
         <div className="container mx-auto px-4 py-4">
           <div className="flex items-center justify-between">
-            <h1 className="text-2xl font-bold font-press-start-2p">NFT Game</h1>
+            <h1 className="text-2xl font-bold font-press-start-2p">Knightingale</h1>
             <div className="flex items-center gap-4">
+              <Link href="/store">
+                <Button className="bg-white text-black hover:bg-gray-200 font-press-start-2p">
+                  Store
+                </Button>
+              </Link>
               <ConnectButton />
             </div>
           </div>

@@ -140,7 +140,7 @@ const TextPressure: React.FC<TextPressureProps> = ({
                         return Math.max(minVal, val + minVal);
                     };
 
-                    const wdth = width ? Math.floor(getAttr(d, 5, 200)) : 100;
+                    const wdth = width ? Math.floor(getAttr(d, 20, 180)) : 20;
                     const wght = weight ? Math.floor(getAttr(d, 100, 900)) : 400;
                     const italVal = italic ? getAttr(d, 0, 1).toFixed(2) : '0';
                     const alphaVal = alpha ? getAttr(d, 0, 1).toFixed(2) : '1';
@@ -160,7 +160,7 @@ const TextPressure: React.FC<TextPressureProps> = ({
     return (
         <div
             ref={containerRef}
-            className="relative w-full h-full overflow-hidden bg-transparent"
+            className="relative w-fit h-fit mx-auto overflow-hidden bg-transparent"
         >
             <style>{`
         @font-face {
@@ -190,13 +190,14 @@ const TextPressure: React.FC<TextPressureProps> = ({
                     } ${stroke ? 'stroke' : ''} uppercase text-center`}
                 style={{
                     fontFamily,
-                    fontSize: fontSize,
+                    fontSize: "clamp(48px, 8vw, 120px)",
                     lineHeight,
                     transform: `scale(1, ${scaleY})`,
                     transformOrigin: 'center top',
                     margin: 0,
                     fontWeight: 100,
                     color: stroke ? undefined : textColor,
+                    letterSpacing: "0.05em"
                 }}
             >
                 {chars.map((char, i) => (
@@ -205,6 +206,7 @@ const TextPressure: React.FC<TextPressureProps> = ({
                         ref={(el) => (spansRef.current[i] = el)}
                         data-char={char}
                         className="inline-block"
+                        style={{ letterSpacing: "0.02em" }}
                     >
                         {char}
                     </span>
