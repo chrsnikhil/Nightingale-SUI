@@ -169,7 +169,7 @@ export default function Home() {
                       className="object-cover transition-transform duration-300 group-hover:scale-110"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent flex flex-col justify-end p-4">
-                      <h3 className="text-lg md:text-xl font-bold text-white">Jerriks</h3>
+                      <h3 className="text-lg md:text-xl font-bold text-white">Jeriks</h3>
                       <p className="text-gray-300 text-xs md:text-sm">Game Dev</p>
                     </div>
                   </CardItem>
