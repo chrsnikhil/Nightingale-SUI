@@ -88,4 +88,9 @@ Knightingale demonstrates how Web3 can enhance, not complicate, gaming experienc
 ---
 
 ## Project Structure
+## Project Structure
+
+Knightingale/ ├── game/ # Godot game project │ ├── scenes/ # Game scenes │ ├── scripts/ # Game logic scripts │ ├── assets/ # Textures, sounds, animations │ └── export/ # WebAssembly export (HTML5 build) │ ├── web/ # Next.js frontend │ ├── components/ # Reusable UI components │ ├── pages/ # App routes (wallet, store, leaderboard) │ ├── public/ # Static assets │ ├── styles/ # Tailwind/global CSS │ └── utils/ # Helper functions and Sui SDK integration │ ├── contracts/ # Move smart contracts │ ├── sources/ # .move source files │ └── build/ # Compiled Move bytecode │ ├── README.md ├── LICENSE └── netlify.toml # Netlify deployment configuration
+
+
 
