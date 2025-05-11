@@ -2,154 +2,132 @@
 
 > Competitive, on-chain PvP built with Godot + Sui Blockchain. Fully deployed. Fully playable. Fully Web3.
 
-**Knightingale** is a **competitive PvP game** built using the **Godot Engine** and powered by the **Sui Blockchain**. Players engage in strategic two-player battles with **real stakes** — wagering **Suicoins** on-chain, where the **winner takes all**.
+**Knightingale** is a **competitive 2-player PvP game** built using the **Godot Engine** and powered by the **Sui Blockchain**. Players engage in strategic battles and wager **Suicoins** through **real smart contracts** — winner takes all.
 
-[🌐 Live Game (Netlify)](https://knightingalesui.netlify.app)  
-[🎥 Demo Video (YouTube)](https://www.youtube.com/watch?v=XqUktZL56hI)  
-[🧠 Pitch Deck (Optional)](#)  
-[📦 GitHub Repository](https://github.com/chrsnikhil/Nightingale-SUI)
+[🌐 Live Demo](https://knightingalesui.netlify.app)  
+[🎥 YouTube Demo](https://www.youtube.com/watch?v=XqUktZL56hI)  
+[🧠 GitHub Repository](https://github.com/chrsnikhil/Nightingale-SUI)
 
 ---
 
 ## 🧠 Why Knightingale?
 
-Unlike most Web3 game submissions:
-- ❌ No UI mockups
-- ❌ No GPT wrappers
-- ❌ No fake data
-
-Instead, you get:
-✅ Fully playable WebAssembly game  
-✅ Real smart contracts (written in Move)  
-✅ Deployed on Sui Testnet  
-✅ Real-time wagering with wallet integration  
-✅ NFT store and leaderboard — **live and functional**
+✅ Fully playable in-browser WebAssembly game  
+✅ On-chain smart contracts (Move)  
+✅ NFT store + minting on Sui testnet  
+✅ Wallet integration via Sui Dapp Kit  
+✅ Leaderboard tied to blockchain state  
+✅ No fluff — real code, real game, real deployment
 
 ---
 
-## 🎮 Gameplay
+## 🎮 Gameplay Highlights
 
-### 🧑‍🤝‍🧑 Local PvP Combat
-- Reflex-based 2-player game
-- Built entirely in **Godot**, playable in-browser (via WebAssembly)
-- Balanced mechanics designed for **skill-first gameplay**
+### 👥 Local PvP Combat
+- Reflex-based 2-player battle
+- Strategic skill-first mechanics
+- Built in **Godot**, playable in-browser
 
 ### 💰 On-Chain Wagering
-- Players stake **Suicoins** before matches
-- Smart contracts handle autonomous payouts
+- Wager Suicoins before matches
+- Payouts handled by smart contracts
 - Transparent, decentralized match resolution
 
 ### 🖼️ NFT Ownership
-- Mint in-game skins and assets
+- Mint custom in-game assets
 - Earn or buy NFTs using Suicoins
-- Fully verifiable on the **Sui blockchain**
+- On-chain verification via Sui Blockchain
 
 ### 🔐 Wallet Integration
-- **Sui Dapp Kit** handles secure wallet auth
-- Players keep custody of funds and NFTs
-- Blockchain interactions made seamless
+- Wallet auth via **Sui Dapp Kit**
+- Secure transactions and user ownership
+- All assets remain under user custody
 
 ---
 
-## 🌐 Companion Web Platform
+## 🌐 Web Companion Platform
 
-Built in **Next.js**, hosted on **Netlify**:
-- Wallet dashboard + connect screen
-- In-game **NFT store** with purchases tied to your wallet
-- **Live leaderboard** powered by on-chain data
-
----
-
-## 📸 Screenshots  
-*(Drop 2-3 gameplay or wallet shots here for max impact)*
+**Built with Next.js + Netlify**, our platform includes:
+- 🧾 Wallet dashboard
+- 📈 Live leaderboard
+- 🛒 NFT store
 
 ---
 
-## 🧱 Tech Stack
+## 🧠 Tech Stack
 
-| Layer            | Tech                          |
-|------------------|-------------------------------|
-| Game Engine      | Godot (WebAssembly)           |
-| Frontend         | Next.js (React)               |
-| Blockchain       | Sui Testnet                   |
-| Smart Contracts  | Move                          |
-| Wallet Integration | Mysten Labs’ Sui Dapp Kit |
-| Hosting          | Netlify                       |
-| NFT Minting      | On-chain via Sui infrastructure |
+| Layer         | Tech                                                                 |
+|---------------|----------------------------------------------------------------------|
+| 🎮 Game Engine| ![Godot](https://img.shields.io/badge/Godot-483CFA?logo=godot-engine&logoColor=white) **Godot (WASM)** |
+| 🌐 Frontend   | ![Next.js](https://img.shields.io/badge/Next.js-black?logo=next.js) **Next.js (React)** |
+| 🧠 Blockchain | ![Sui](https://img.shields.io/badge/Sui-2D6CDF?logo=sui&logoColor=white) **Sui Testnet** |
+| 📜 Smart Contracts | ![Move](https://img.shields.io/badge/Move%20Lang-FF8A65?style=flat&logo=data:image/svg+xml;base64,&logoColor=white) **Move** |
+| 🔐 Wallet     | ![Sui Dapp Kit](https://img.shields.io/badge/Sui%20Dapp%20Kit-1F2937?style=flat&logo=sui&logoColor=white) **Mysten Labs’ Dapp Kit** |
+| 🚀 Hosting    | ![Netlify](https://img.shields.io/badge/Netlify-00C7B7?logo=netlify&logoColor=white) **Netlify** |
+| 🖼 NFT Infra  | ![NFT](https://img.shields.io/badge/NFT%20Minting-Sui-blueviolet) **On-chain Sui Infra** |
 
 ---
 
 ## 🧩 Development Challenges
 
-- ⚙️ Syncing WebAssembly Godot builds with React + dynamic routing
-- 🔒 Implementing secure wager logic in Move contracts
-- 🔁 Bridging Godot’s runtime with blockchain state
-- 👥 Testing multiplayer UX + wallet sync in a browser sandbox
+- 🔄 Syncing **Godot WebAssembly** build with React + wallet states
+- 🔐 Secure **smart contract** logic for Suicoin wagers and NFTs
+- 🔁 Linking real-time **Godot gameplay state** with **on-chain data**
+- 👥 Testing multi-device PvP + wallet sync in a sandbox
 
 ---
 
 ## 🚀 Roadmap
 
-- 🌍 Online matchmaking with global player discovery
-- 🧾 Global wallet-linked leaderboard with seasonal rewards
-- 🛒 Marketplace for player-created NFTs and auctions
+- 🌍 Global matchmaking (online multiplayer)
+- 🧾 Leaderboard with seasonal rewards
+- 🛒 NFT auction + resale marketplace
+- 🎯 On-chain quests + ranking system
 - 📱 Mobile deployment (Android + iOS)
-- 🧙 Quest and player rank system via smart contracts
-- 🗳 DAO-powered governance + community tournaments
-- 🎯 On-chain events backed by staking pools
+- 🗳 DAO-based game governance
+- 🔥 Sui-powered in-game events + staking incentives
 
 ---
 
-## 🏆 Submission Checklist
+## ✅ Submission Highlights
 
-| Feature                             | Status |
-|-------------------------------------|--------|
-| Fully playable game (WebAssembly)   | ✅     |
-| Sui wallet integration              | ✅     |
-| On-chain wagering w/ real contracts| ✅     |
-| NFT store + minting on testnet      | ✅     |
-| Publicly viewable + live demo       | ✅     |
-| Leaderboard tied to smart contract  | ✅     |
-| Instructions + How to Play guide    | ✅     |
-| Deployment on Sui Testnet           | ✅     |
-| Game trailer / demo video           | ✅     |
-
----
-
-## 🎯 What Makes Knightingale Different?
-
-> Web3 is full of wrappers and half-baked ideas. We wanted to build something real.
-
-Knightingale is one of the few **fully-functional**, fully-deployed **multiplayer PvP games** in the space that actually:
-
-- **Uses blockchain features to enhance gameplay**
-- **Works right now — not “coming soon”**
-- **Proves the power of Sui for real-time games**
+| Feature                                   | Status |
+|-------------------------------------------|--------|
+| Fully playable browser game               | ✅     |
+| Wallet integration (Sui Dapp Kit)         | ✅     |
+| Real smart contract wagering              | ✅     |
+| NFT minting + ownership on Sui            | ✅     |
+| Live leaderboard                          | ✅     |
+| Deployed on Netlify (publicly viewable)   | ✅     |
+| Companion site (React + Next.js)          | ✅     |
+| Demo video + instructions                 | ✅     |
+| Student + Entertainment track eligible    | ✅     |
 
 ---
 
-## 💬 Notes for Judges
+## 🏆 Why We Stand Out
 
-We’ve seen many projects present mockups or AI-powered wrappers during hackathons. This is not that.
+> "Knightingale isn’t a blockchain gimmick — it’s an actual game powered by Sui."
 
-Knightingale is a fully working game with:
-- Wallet-based wagering and payouts
-- Live leaderboard
-- Real gameplay loop
-- Functional store and minting logic
-- Sui smart contracts deployed and tested
+- No GPT wrappers  
+- No Figma-to-frontend demos  
+- No non-functional mockups
 
-It’s built to show how blockchain can empower real games, not complicate them.
+Instead, you get:
+- Full-featured gameplay loop  
+- Working contracts  
+- NFT store  
+- Player experience that respects the tech
 
 ---
 
-## 🧑‍🎓 Student & Entertainment Track
+## 🧑‍🎓 University Student Track Eligibility
 
-This project is submitted under the **Student University Track** and the **Entertainment Track**. We believe Knightingale represents:
+Knightingale is submitted under:
+- 🧩 **Entertainment Track**
+- 🎓 **University Student Track**
 
-- Real engineering effort
-- Original gameplay
-- A strong understanding of the Sui ecosystem
+It represents serious engineering effort, deep integration with Sui, and gameplay-first design. This isn’t a prototype — it’s a Web3 game built to be played.
 
 ---
 
