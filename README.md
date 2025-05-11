@@ -2,6 +2,13 @@
 
 > Competitive, on-chain PvP built with Godot + Sui Blockchain. Fully deployed. Fully playable. Fully Web3.
 
+![Godot](https://img.shields.io/badge/Godot-483CFA?logo=godot-engine&logoColor=white)
+![Next.js](https://img.shields.io/badge/Next.js-black?logo=next.js)
+![Sui](https://img.shields.io/badge/Sui-2D6CDF?logo=sui&logoColor=white)
+![Move](https://img.shields.io/badge/Move%20Lang-FF8A65?style=flat&logo=move&logoColor=white)
+![Netlify](https://img.shields.io/badge/Netlify-00C7B7?logo=netlify&logoColor=white)
+![NFT](https://img.shields.io/badge/NFT%20Minting-Sui-blueviolet)
+
 **Knightingale** is a **competitive 2-player PvP game** built using the **Godot Engine** and powered by the **Sui Blockchain**. Players engage in strategic battles and wager **Suicoins** through **real smart contracts** — winner takes all.
 
 [🌐 Live Demo](https://knightingalesui.netlify.app)  
@@ -54,21 +61,21 @@
 
 ---
 
-## 🧠 Tech Stack
+## 🧩 Tech Stack
 
 | Layer         | Tech                                                                 |
 |---------------|----------------------------------------------------------------------|
 | 🎮 Game Engine| ![Godot](https://img.shields.io/badge/Godot-483CFA?logo=godot-engine&logoColor=white) **Godot (WASM)** |
 | 🌐 Frontend   | ![Next.js](https://img.shields.io/badge/Next.js-black?logo=next.js) **Next.js (React)** |
 | 🧠 Blockchain | ![Sui](https://img.shields.io/badge/Sui-2D6CDF?logo=sui&logoColor=white) **Sui Testnet** |
-| 📜 Smart Contracts | ![Move](https://img.shields.io/badge/Move%20Lang-FF8A65?style=flat&logo=data:image/svg+xml;base64,&logoColor=white) **Move** |
+| 📜 Smart Contracts | ![Move](https://img.shields.io/badge/Move%20Lang-FF8A65?style=flat&logo=move&logoColor=white) **Move** |
 | 🔐 Wallet     | ![Sui Dapp Kit](https://img.shields.io/badge/Sui%20Dapp%20Kit-1F2937?style=flat&logo=sui&logoColor=white) **Mysten Labs’ Dapp Kit** |
 | 🚀 Hosting    | ![Netlify](https://img.shields.io/badge/Netlify-00C7B7?logo=netlify&logoColor=white) **Netlify** |
 | 🖼 NFT Infra  | ![NFT](https://img.shields.io/badge/NFT%20Minting-Sui-blueviolet) **On-chain Sui Infra** |
 
 ---
 
-## 🧩 Development Challenges
+## 🧠 Development Challenges
 
 - 🔄 Syncing **Godot WebAssembly** build with React + wallet states
 - 🔐 Secure **smart contract** logic for Suicoin wagers and NFTs
